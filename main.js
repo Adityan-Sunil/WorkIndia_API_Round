@@ -19,21 +19,25 @@ const connection = mysql.createConnection({
 
 connection.connect();
 app.post("/sites/register", (req, res)=>{
-    console.log(addUser(req.body.user, req.body.pass));
-    res.send("success");
+    if(addUser(req.body.user, req.body.pass))
+        res.send("success");
+    else    
+        res.send("registration failed");
 })
 
 app.post("/sites/login", (req, res)=>{
-    console.log(login(req.body.username, req.body.password));
-    res.send("success");
+    if(login(req.body.username, req.body.password))
+        res.send("success");
+    else 
+        res.send("login failed");
 })
 app.get("/sites/list", (req, res)=>{
     res.send(viewList());
 })
 app.post("/sites",(req,res)=>{
     const data = req.body;
-    console.log(addPassword(data.username, data.website, data.password));
-    res.send({'status':"success"});
+    if(addPassword(data.username, data.website, data.password));
+        res.send({'status':"success"});
 })
 app.listen(3000,()=>{
     console.log("Listening in 3000");

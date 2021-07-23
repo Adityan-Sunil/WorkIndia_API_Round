@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
 
 connection.connect();
 app.post("/sites/register", (req, res)=>{
-    if(addUser(req.body.user, req.body.pass))
+    if(addUser(req.body.username, req.body.password))
         res.send("success");
     else    
         res.send("registration failed");
@@ -51,8 +51,9 @@ function viewList() {
             return false;
         } else {
             res.forEach(resu => {
-                result.push({"Website":resu.WEBSITE, "Username":resu.USERNAME, "Password":enc.AES.decrypt(resu.PASSWORD, key)});
+                result.push({"Website":resu.WEBSITE, "Username":resu.USERNAME, "Password":enc.AES.decrypt(resu.PASSWORD, key).toString(enc.enc.Utf8)});
             });
+            console.log(result);
         }
         return result;
     })
